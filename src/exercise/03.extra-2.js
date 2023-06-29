@@ -30,8 +30,16 @@ function pokemonCacheReducer(state, action) {
   }
 }
 
+function usePokemonCache() {
+  const context = React.useContext(PokemonCacheContext);
+  if (!context) {
+    throw new Error('usePokemonCache should be used within PokemonCacheProvider')
+  }
+  return context;
+}
+
 function PokemonInfo({ pokemonName: externalPokemonName }) {
-  const [cache, dispatch] = React.useContext(PokemonCacheContext);
+  const [cache, dispatch] = usePokemonCache();
   const pokemonName = externalPokemonName?.toLowerCase();
 
   const {
@@ -71,7 +79,7 @@ function PokemonInfo({ pokemonName: externalPokemonName }) {
 }
 
 function PreviousPokemon({ onSelect }) {
-  const [cache] = React.useContext(PokemonCacheContext);
+  const [cache] = usePokemonCache();
   return (
     <div>
       Previous Pokemon
